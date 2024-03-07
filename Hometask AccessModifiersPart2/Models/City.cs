@@ -1,33 +1,38 @@
-﻿
-namespace Hometask_AccessModifiersPart2.Models
+﻿namespace Hometask_AccessModifiersPart2.Models
 {
     internal class City
     {
-        private string _name;
-        public string Name 
-        { 
-            get=> _name;
+        string _name;
+        public string Name
+        {
+            get => _name;
             set
             {
-                if (Name.Length > 3 && Name.Length > 20) return;
-                foreach (char c in Name)
+                if (value.Length < 3 && value.Length > 20) return;
+                foreach (char c in value)
                     if (!char.IsLetter(c)) return;
                 _name = value;
             }
         }
-        private int _population;
-        public int Population
+        protected int _population;
+        public virtual int Population
         {
             get => _population;
             set
             {
-                if (Population < 0) return;
+                if (value > 0) _population = value;
             }
         }
     }
-    internal class  ChinaCity:City
+    internal class ChinaCity : City
     {
-        
-
+        public override int Population
+        {
+            get => _population;
+            set
+            {
+                if(value>100000) _population=value;
+            }
+        }
     }
 }
